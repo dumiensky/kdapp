@@ -1,0 +1,1 @@
+ /Users/dumiensky/Projects/Flutter/kdapp/.dart_tool/flutter_build/f6d4f9ababf5475c3659ec6385946a04/native_assets.yaml: 
