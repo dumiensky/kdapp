@@ -12,4 +12,16 @@ class User {
   final Company company;
 
   User(this.id, this.name, this.userName, this.email, this.address, this.phone, this.website, this.company);
+
+  User.fromMap(Map<String, dynamic> map)
+    : this (
+      map['id'] as int,
+      map['name'] as String,
+      map['userName'] as String,
+      map['email'] as String,
+      Address.fromMap(map['address']),
+      map['phone'] as String,
+      map['website'] as String,
+      Company.fromMap(map['company'])
+    );
 }

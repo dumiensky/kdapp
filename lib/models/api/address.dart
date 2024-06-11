@@ -8,4 +8,13 @@ class Address {
   final Geo geo;
 
   Address(this.street, this.suite, this.city, this.zipCode, this.geo);
+
+  Address.fromMap(Map<String, dynamic> map)
+    : this(
+      map['street'] as String,
+      map['suite'] as String,
+      map['city'] as String,
+      map['zipCode'] as String,
+      Geo.fromMap(map['geo'])
+    );
 }
