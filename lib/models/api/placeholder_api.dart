@@ -14,8 +14,8 @@ class PlaceholderApi {
     final url = Uri.https(_base, '/albums');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Album.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Album.fromMap(_)).toList();
   }
 
   static Future<Album> getAlbum(int id) async {
@@ -30,16 +30,16 @@ class PlaceholderApi {
     final url = Uri.https(_base, '/albums/$albumId/photos');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Photo.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Photo.fromMap(_)).toList();
   }
 
   static Future<List<Photo>> getPhotos() async {
     final url = Uri.https(_base, '/photos');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Photo.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Photo.fromMap(_)).toList();
   }
 
   static Future<Photo> getPhoto(int id) async {
@@ -54,8 +54,8 @@ class PlaceholderApi {
     final url = Uri.https(_base, '/posts');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Post.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Post.fromMap(_)).toList();
   }
 
   static Future<Post> getPost(int id) async {
@@ -70,24 +70,24 @@ class PlaceholderApi {
     final url = Uri.https(_base, '/comments');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Comment.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Comment.fromMap(_)).toList();
   }
 
   static Future<List<Comment>> getPostComments(int postId) async {
     final url = Uri.https(_base, '/posts/$postId/comments');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Comment.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Comment.fromMap(_)).toList();
   }
 
   static Future<List<User>> getUsers() async {
     final url = Uri.https(_base, '/users');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => User.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => User.fromMap(_)).toList();
   }
 
   static Future<User> getUser(int id) async {
@@ -102,23 +102,23 @@ class PlaceholderApi {
     final url = Uri.https(_base, '/users/$userId/albums');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Album.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Album.fromMap(_)).toList();
   }
 
   static Future<List<Post>> getUserPosts(int userId) async {
     final url = Uri.https(_base, '/users/$userId/posts');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Post.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Post.fromMap(_)).toList();
   }
 
   static Future<List<Todo>> getUserTodos(int userId) async {
     final url = Uri.https(_base, '/users/$userId/todos');
     final response = await http.get(url);
 
-    final decoded = json.decode(response.body) as Map<String, dynamic>;
-    return (decoded as List).map((_) => Todo.fromMap(_)).toList();
+    final decoded = json.decode(response.body) as List;
+    return decoded.map((_) => Todo.fromMap(_)).toList();
   }
 }

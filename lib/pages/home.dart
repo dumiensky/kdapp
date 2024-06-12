@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kdapp/models/api/album.dart';
-import 'package:kdapp/models/api/placeholder-api.dart';
+import 'package:kdapp/models/api/placeholder_api.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,7 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   Future<List<Album>>? _albums;
 
   @override
@@ -21,15 +20,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Album>>(
-      future: _albums,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done)
-        {
-          return const CircularProgressIndicator();
-        }
+    return Scaffold(
+        appBar: AppBar(title: const Text("Album browser")),
+        body: Center(
+            child: FutureBuilder<List<Album>>(
+                future: _albums,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const CircularProgressIndicator();
+                  }
 
-        return const Text('loaded');
-      });
+                  return Text("loaded ${snapshot.data?.length}");
+                })
+              )
+            );
   }
 }
