@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kdapp/components/username.dart';
 import 'package:kdapp/models/api/album.dart';
 import 'package:kdapp/models/api/photo.dart';
 import 'package:kdapp/models/api/placeholder_api.dart';
+import 'package:kdapp/pages/user_page.dart';
 
 class AlbumPage extends StatefulWidget {
   final Album album;
@@ -15,11 +17,11 @@ class AlbumPage extends StatefulWidget {
 
 class _AlbumPageState extends State<AlbumPage> {
 
-  Future<List<Photo>>? _album;
+  Future<List<Photo>>? _photos;
 
   @override
   void initState() {
-    _album = PlaceholderApi.getAlbumPhotos(widget.album.id);
+    _photos = PlaceholderApi.getAlbumPhotos(widget.album.id);
     super.initState();
   }
 
@@ -27,32 +29,43 @@ class _AlbumPageState extends State<AlbumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.album.title),
+          title: Text("Album: ${widget.album.title}"),
           backgroundColor: Colors.lightBlue,
           leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
-        body: Center(
-            child: FutureBuilder<List<Photo>>(
-                future: _album,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return const CircularProgressIndicator();
-                  }
+        body: FutureBuilder<List<Photo>>(
+            future: _photos,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const CircularProgressIndicator();
+              }
+        
+              return buildPhotos(snapshot.data!);
+            }),
+        floatingActionButton: FloatingActionButton.large(
+          backgroundColor: Colors.orange,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Username(widget.album.userId),
+          ),
+          onPressed: () => navigateToUser(context, widget.album.userId)),
+        );
+  }
 
-                  return buildPhotos(snapshot.data!);
-                })
-              )
-            );
+  void navigateToUser(BuildContext context, int userId) {
+    PlaceholderApi.getUser(userId).then((u) => Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (c) => UserPage(u))));
   }
   
   Widget buildPhotos(List<Photo> photos) {
-    return ListView(
-      children: photos
-        .map((photo) => 
-          Container(
-            color: Theme.of(context).primaryColorLight,
-            margin: const EdgeInsets.all(8.0),
-            child: Padding(
+    return SingleChildScrollView(
+      child: Column(
+        children: photos
+          .map((photo) => 
+            Container(
+              color: Theme.of(context).primaryColorLight,
+              margin: const EdgeInsets.all(8.0),
               padding: const EdgeInsets.all(8.0),
               child: Column(
                     children: <Widget>[
@@ -71,8 +84,8 @@ class _AlbumPageState extends State<AlbumPage> {
                         textAlign: TextAlign.center,)
                       ],
                   ),
-            ),
-          ))
-        .toList());
+            ))
+          .toList()),
+    );
   }
 }
