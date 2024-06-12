@@ -14,7 +14,7 @@ class Address {
       map['street'] as String,
       map['suite'] as String,
       map['city'] as String,
-      map['zipCode'] as String,
+      map['zipcode'] as String,
       Geo.fromMap(map['geo'])
     );
 }

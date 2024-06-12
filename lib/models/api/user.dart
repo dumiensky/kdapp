@@ -17,7 +17,7 @@ class User {
     : this (
       map['id'] as int,
       map['name'] as String,
-      map['userName'] as String,
+      map['username'] as String,
       map['email'] as String,
       Address.fromMap(map['address']),
       map['phone'] as String,
