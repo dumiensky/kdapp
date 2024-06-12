@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
               onPressed: () => 
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (c) => AlbumPage(album.id))), 
+                  MaterialPageRoute(builder: (c) => AlbumPage(album))), 
               child: Padding(
                 padding: const EdgeInsets.all(10), 
                 child: Column(
