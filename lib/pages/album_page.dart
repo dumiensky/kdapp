@@ -40,32 +40,38 @@ class _AlbumPageState extends State<AlbumPage> {
                   }
 
                   return buildPhotos(snapshot.data!);
-                })));
+                })
+              )
+            );
   }
   
   Widget buildPhotos(List<Photo> photos) {
     return ListView(
       children: photos
         .map((photo) => 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-                  children: <Widget>[
-                    CachedNetworkImage(
-                        imageUrl: photo.url,
-                        placeholder: (context, url) => const SizedBox(
-                          height: 300,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          )),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                    ),
-                    Text(
-                      photo.title, 
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      textAlign: TextAlign.center,)
-                    ],
-                ),
+          Container(
+            color: Theme.of(context).primaryColorLight,
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                    children: <Widget>[
+                      CachedNetworkImage(
+                          imageUrl: photo.url,
+                          placeholder: (context, url) => const SizedBox(
+                            height: 400,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            )),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
+                      Text(
+                        photo.title, 
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,)
+                      ],
+                  ),
+            ),
           ))
         .toList());
   }
