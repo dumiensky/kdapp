@@ -39,7 +39,7 @@ class _UserPageState extends State<UserPage> {
               future: _albums,
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 return Column(
@@ -56,7 +56,7 @@ class _UserPageState extends State<UserPage> {
               future: _posts,
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 return Column(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kdapp/models/api/comment.dart';
 import 'package:kdapp/models/api/placeholder_api.dart';
 import 'package:kdapp/models/api/post.dart';
-import 'package:kdapp/pages/user_page.dart';
 
 class PostPage extends StatefulWidget {
   final Post post;
@@ -32,7 +31,9 @@ class _PostPageState extends State<PostPage> {
           leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
         body: SingleChildScrollView(
-          child: Column(children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
             Container(
               margin: const EdgeInsets.all(8.0),
               color: const Color.fromARGB(250, 230, 230, 230),
@@ -46,12 +47,12 @@ class _PostPageState extends State<PostPage> {
                     textAlign: TextAlign.left),
               ]),
             ),
-            const Text("Comments"),
+            const Text("Comments", textAlign: TextAlign.center),
             FutureBuilder(
               future: _comments,
               builder: (context, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done){
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
           
                 return buildComments(snapshot.data!);

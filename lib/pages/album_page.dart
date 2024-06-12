@@ -37,7 +37,7 @@ class _AlbumPageState extends State<AlbumPage> {
             future: _photos,
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
-                return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
               }
         
               return buildPhotos(snapshot.data!);
