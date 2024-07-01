@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kdapp/models/api/album.dart';
 import 'package:kdapp/models/api/placeholder_api.dart';
 import 'package:kdapp/models/api/post.dart';
+import 'package:kdapp/models/api/todo.dart';
 import 'package:kdapp/models/api/user.dart';
 import 'package:kdapp/pages/album_page.dart';
 import 'package:kdapp/pages/post_page.dart';
@@ -18,11 +19,13 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   Future<List<Album>>? _albums;
   Future<List<Post>>? _posts;
+  Future<List<Todo>>? _todos;
 
   @override
   void initState() {
     _albums = PlaceholderApi.getUserAlbums(widget.user.id);
     _posts = PlaceholderApi.getUserPosts(widget.user.id);
+    _todos = PlaceholderApi.getUserTodos(widget.user.id);
     super.initState();
   }
 
@@ -68,7 +71,24 @@ class _UserPageState extends State<UserPage> {
                     buildPosts(snapshot.data!)
                   ],
                 );
-              })
+              }),
+          FutureBuilder<List<Todo>>(
+              future: _todos,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                return Column(
+                  children: [
+                    Text(
+                      "Todos",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    buildTodos(snapshot.data!)
+                  ],
+                );
+              }),
         ]));
   }
 
@@ -105,7 +125,7 @@ class _UserPageState extends State<UserPage> {
                           Text(post.title,
                               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                               textAlign: TextAlign.left),
-                          Text(post.title,
+                          Text(post.body,
                               style: Theme.of(context).textTheme.bodyMedium,
                               textAlign: TextAlign.left),
                           TextButton(
@@ -118,5 +138,35 @@ class _UserPageState extends State<UserPage> {
                       )),
                 ))
             .toList());
+  }
+
+  Widget buildTodos(List<Todo> todos) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: todos
+            .map((todo) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      color: const Color.fromARGB(230, 250, 230, 230),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(todo.title,
+                              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                              textAlign: TextAlign.left),
+                          getTodoStateText(todo)
+                        ],
+                      )),
+                ))
+            .toList());
+  }
+
+  Widget getTodoStateText(Todo todo) {
+    if (todo.completed) {
+      return const Text("COMPLETED", style: TextStyle(color: Colors.green));
+    }
+
+    return const Text("IN PROGRESS");
   }
 }
